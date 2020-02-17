@@ -2,20 +2,34 @@ package com.example.myapplication;
 
 public class Product {
 
-    private String name;
-    private String  price;
-    Product(String n, String p)
+    public String mSKU;
+    public String mName;
+    public int mFinalPrice;
+    public int mPromoPrice;
+    public String mImageURL;
+    public Product(String sku, String n, int price)
     {
-        name = n;
-        price =p;
+        mSKU = sku;
+        mName = n;
+        mFinalPrice = price;
+
+    }
+
+    public void SetPromoPrice(int p)
+    {
+        mPromoPrice =p;
+    }
+    public void SetImageURL(String url)
+    {
+        mImageURL = url;
     }
 
     public String getName()
     {
-        return name;
+        return mName;
     }
-    public String getPrice()
+    public int getPrice()
     {
-        return price;
+        return mFinalPrice;
     }
 }

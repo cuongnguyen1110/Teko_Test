@@ -13,7 +13,7 @@
 
         <ImageView
             android:id="@+id/producImage"
-            android:background="@drawable/vigor_2920gvn"
+            android:background="@drawable/search_icon"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="left"
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="@{product.name}"
+                android:text="@{product.mName}"
                 android:textAlignment="center"
                 android:textColor="@color/TextcolorBlack"
                 android:onClick="@{() -> ClickedHandler.OnProductClicked(product)}"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="@{product.price}"
+                android:text="@{product.mSKU}"
                 android:textAlignment="center"
                 android:textColor="@color/colorRed"
                 android:textSize="25dp" />

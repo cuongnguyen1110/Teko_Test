@@ -28,7 +28,7 @@
                 android:layout_marginTop="10dp"
                 android:hint="enter product code"
                 android:inputType="text"
-                android:background="@drawable/search_edit_text"
+
                 android:paddingLeft="60dp">
 
             </EditText>
