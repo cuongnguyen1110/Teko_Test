@@ -23,9 +23,17 @@ public class MainActivity extends AppCompatActivity {
         View v = (View) findViewById((R.id.MainLayout));
         LayoutInflater inflater = LayoutInflater.from(this.getApplicationContext());
 
-        ProductLayoutBinding binding = DataBindingUtil.inflate(inflater,R.layout.product_layout,main,true);
-        Product p = new Product("Test name","999.999");
-        binding.setProduct(p);
+        ProductCtrl pCtr = new ProductCtrl();
+
+        ProductLayoutBinding binding1 = DataBindingUtil.inflate(inflater,R.layout.product_layout,main,true);
+        Product p1 = new Product("Test name","999.999");
+        binding1.setProduct(p1);
+        binding1.setClickedHandler(pCtr);
+
+        ProductLayoutBinding binding2 = DataBindingUtil.inflate(inflater,R.layout.product_layout,main,true);
+        Product p2 = new Product("Test name--222","999.111");
+        binding2.setProduct(p2);
+        binding2.setClickedHandler(pCtr);
 
     }
 }

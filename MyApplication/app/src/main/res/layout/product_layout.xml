@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <variable name="ClickedHandler" type="com.example.myapplication.ProductCtrl"/>
         <variable name="product" type="com.example.myapplication.Product"/>
     </data>
     <FrameLayout
@@ -17,7 +18,9 @@
             android:layout_height="100dp"
             android:layout_gravity="left"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"></ImageView>
+            android:layout_marginTop="5dp"
+            android:onClick="@{() -> ClickedHandler.OnProductClicked(product)}"
+            ></ImageView>
 
         <LinearLayout
             android:layout_width="280dp"
@@ -34,6 +37,7 @@
                 android:text="@{product.name}"
                 android:textAlignment="center"
                 android:textColor="@color/TextcolorBlack"
+                android:onClick="@{() -> ClickedHandler.OnProductClicked(product)}"
                 android:textSize="25dp" />
 
             <TextView
