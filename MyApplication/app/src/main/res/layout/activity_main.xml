@@ -27,6 +27,7 @@
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/search_edit_text"
                 android:hint="enter product code"
                 android:inputType="text"
                 android:imeOptions="actionDone"

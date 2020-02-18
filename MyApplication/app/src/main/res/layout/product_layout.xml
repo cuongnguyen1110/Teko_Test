@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="android.view.View"/>
         <variable name="ClickedHandler" type="com.example.myapplication.ProductCtrl"/>
         <variable name="product" type="com.example.myapplication.Product"/>
     </data>
@@ -13,9 +14,9 @@
 
         <ImageView
             android:id="@+id/producImage"
-            android:background="@drawable/search_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:background="@drawable/pv_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="left"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
@@ -33,13 +34,25 @@
             <TextView
                 android:id="@+id/producName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="left"
                 android:onClick="@{() -> ClickedHandler.OnProductClicked(product)}"
                 android:text="@{product.mName}"
                 android:textAlignment="center"
                 android:textColor="@color/TextcolorBlack"
                 android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/promoPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:text='@{""+ (product.mPromoPrice > 0 ? product.mPromoPrice : 0)+"đ"}'
+                android:visibility="@{product.mPromoPrice > 0 ? View.VISIBLE : View.GONE}"
+                android:textAlignment="center"
+                android:textColor="@color/colorRed"
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/productPrice"
@@ -49,8 +62,12 @@
                 android:layout_marginLeft="5dp"
                 android:text='@{""+ (product.mFinalPrice > 0 ? product.mFinalPrice : 0)+"đ"}'
                 android:textAlignment="center"
-                android:textColor="@color/colorRed"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15dp" />
+
+
         </LinearLayout>
+
+
     </FrameLayout>
 </layout>

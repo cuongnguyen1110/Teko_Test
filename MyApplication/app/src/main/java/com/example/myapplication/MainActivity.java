@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout main = (LinearLayout)findViewById(R.id.MainLayout);
+
         main = main.findViewById(R.id.Scroll).findViewById(R.id.ProductList);
 
         LayoutInflater inflater = LayoutInflater.from(this.getApplicationContext());
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mSearchView = new SearchView(main,inflater);
+        mSearchView = new SearchView(this,main,inflater);
 
 /*
         ProductCtrl pCtr = new ProductCtrl();
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0; i < count; i++)
             {
                 int Price = -1;
+                int promoPrice = -1;
                 String sku = "";
                 String name ="";
                 String image = "";
@@ -160,13 +162,18 @@ public class MainActivity extends AppCompatActivity {
                 catch (Exception e) { }
 
                 try{
+                    promoPrice = productList.getJSONObject(i).getJSONObject("price").getInt("supplierSalePrice");
+                }
+                catch (Exception e) { }
+
+                try{
                     image = productList.getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url");
                 }
                 catch (Exception e) { }
 
                 Product p = new Product(sku,name,Price);
                 p.SetImageURL(image);
-                p.SetPromoPrice(555);
+                p.SetPromoPrice(promoPrice);
                 mSearchView.AddProduct(p);
             }
             Log.d("Cuong", "parseSearchRespone: number product: "+ count);
