@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import org.json.JSONObject;
+
 public class Product {
 
     public String mSKU;
@@ -7,11 +9,57 @@ public class Product {
     public int mFinalPrice;
     public int mPromoPrice;
     public String mImageURL;
+
+    public String mCode;
+    public int mStatus;
+    public Product()
+    {
+        mSKU = "";
+        mName = "";
+        mFinalPrice = -1;
+        mPromoPrice = -1;
+        mImageURL = "";
+        mCode = mSKU;
+        mStatus = 1;
+    }
     public Product(String sku, String n, int price)
     {
         mSKU = sku;
         mName = n;
         mFinalPrice = price;
+
+    }
+
+    public void Construct(JSONObject obj)
+    {
+        try {
+            mSKU = obj.getString("sku");
+        }
+        catch (Exception e) {}
+
+        try
+        {
+            mName = obj.getString("name");
+        }
+        catch (Exception e){};
+
+        try{
+            mFinalPrice = obj.getJSONObject("price").getInt("sellPrice");
+        }
+        catch (Exception e) { }
+
+        try{
+            mPromoPrice = obj.getJSONObject("price").getInt("supplierSalePrice");
+        }
+        catch (Exception e) { }
+
+        try{
+            if(obj.getJSONArray("images").length() > 0 )
+            {
+                mImageURL = obj.getJSONArray("images").getJSONObject(0).getString("url");
+            }
+        }
+        catch (Exception e) { }
 
     }
 

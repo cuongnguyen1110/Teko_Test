@@ -19,22 +19,24 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.databinding.ProductDetailLayoutBinding;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.net.URLEncoder;
-import java.util.List;
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 public class MainActivity extends AppCompatActivity {
 
     private SearchView mSearchView;
     private RequestQueue mRequestQueue;
     private String mSearchURL = "https://listing.stage.tekoapis.net/api/search/?channel=pv_online&q=_PRODUCT&visitorId=&_page=1&_limit=10&terminal=CP01";
-    private List<Product> mProductList;
+    //private List<Product> mProductList;
+    ArrayList<Product> mProductList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         mSearchView = new SearchView(this,main,inflater);
 
+        mProductList = new ArrayList<Product>();
 /*
         ProductCtrl pCtr = new ProductCtrl();
 
@@ -96,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void SearchForProduct(String product)
     {
-        mSearchView.ClearView();
         String pEncode = product;
         try
         {
@@ -131,56 +133,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void parseSearchRespone(JSONObject res)
     {
+        mProductList.clear();
+        //mSearchView.ClearView();
         try {
+            Log.d("Cuong", "log 11111 ");
             JSONObject result = res.getJSONObject("result");
-
+            Log.d("Cuong", "log 22222 ");
             JSONArray productList = result.getJSONArray("products");
+            Log.d("Cuong", "log 3333 ");
             int count = productList.length();
+            Log.d("Cuong", "log 4444 lengh:  "+count);
             for(int i = 0; i < count; i++)
             {
-                int Price = -1;
-                int promoPrice = -1;
-                String sku = "";
-                String name ="";
-                String image = "";
-                try {
-                    sku = productList.getJSONObject(i).getString("sku");
-                }
-                catch (Exception e) {}
-
-                try
-                {
-                    name = productList.getJSONObject(i).getString("name");
-                }
-                catch (Exception e){};
-
-
-
-                try{
-                    Price = productList.getJSONObject(i).getJSONObject("price").getInt("sellPrice");
-                }
-                catch (Exception e) { }
-
-                try{
-                    promoPrice = productList.getJSONObject(i).getJSONObject("price").getInt("supplierSalePrice");
-                }
-                catch (Exception e) { }
-
-                try{
-                    image = productList.getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url");
-                }
-                catch (Exception e) { }
-
-                Product p = new Product(sku,name,Price);
-                p.SetImageURL(image);
-                p.SetPromoPrice(promoPrice);
-                mSearchView.AddProduct(p);
+              JSONObject obj = productList.getJSONObject(i);
+              Product p = new Product();
+              p.Construct(obj);
+              mProductList.add(p);
             }
+            mSearchView.UpdateProductList(mProductList);
             Log.d("Cuong", "parseSearchRespone: number product: "+ count);
         }catch (Exception e)
         {
             Log.i("Cuong","Can not parse respone: "+e);
         }
+    }
+
+    public void ShowDetailProduct(Product p)
+    {
+        ProductDetailLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.product_detail_layout);
+        binding.setProduct(p);
     }
 
 }

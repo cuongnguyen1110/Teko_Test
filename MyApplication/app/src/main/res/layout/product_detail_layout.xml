@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="product" type="com.example.myapplication.Product"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/topBar"
+            android:layout_height="80dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ProductName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:text="@{product.mName}" />
+            <TextView
+                android:id="@+id/ProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorRed"
+                android:text='@{ "" + product.mFinalPrice + " đ"}'  />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/producImage"
+            android:background="@drawable/pv_icon"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            >
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="2dp"
+            android:orientation="vertical"
+            android:layout_height="110dp">
+
+            <TextView
+                android:id="@+id/detailPName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="5dp"
+                android:text="@{product.mName}" />
+
+            <TextView
+                android:id="@+id/ProductCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="left"
+                android:text='@{ "Mã SP: "+product.mCode}' />
+            <TextView
+                android:id="@+id/pStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="left"
+                android:text='@{ product.mStatus > 0 ? "Sẵn hàng" : "Tạm hết hàng"}' />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="left"
+                android:text='@{ "" + product.mFinalPrice + " đ"}' />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/specifications"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sameList"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="vertical"></LinearLayout>
+    </LinearLayout>
+</layout>
