@@ -1,0 +1,4 @@
+- Using Android databinding for updating product's information.
+- Using Volley for sending request.
+- Using Glide for downloading/caching (to disk) images
+- Using only one activity and then setContentView when switch between 'search' screen and 'product detail' screen.

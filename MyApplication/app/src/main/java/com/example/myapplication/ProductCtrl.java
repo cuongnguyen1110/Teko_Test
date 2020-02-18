@@ -15,6 +15,5 @@ public class ProductCtrl
         Log.i("Cuong5","Clicked product: " + p.getName());
         MainActivity main = (MainActivity)(mMainActivity);
         main.GetProductDetail(p);
-
     }
 }
