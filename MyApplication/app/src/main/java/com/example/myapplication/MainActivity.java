@@ -22,6 +22,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.myapplication.databinding.ProductDetailLayoutBinding;
 
 import org.json.JSONArray;
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.producImage);
 
-        Glide.with(this).load(p.mImageURL).into(imageView);
+        Glide.with(this).load(p.mImageURL).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(imageView);
     }
 
     public void BackPress(View v)
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 return handled;
             }
         });
-        
+
         LinearLayout main = (LinearLayout)findViewById(R.id.MainLayout);
 
         main = main.findViewById(R.id.Scroll).findViewById(R.id.ProductList);

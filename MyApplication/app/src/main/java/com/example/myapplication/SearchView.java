@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.myapplication.databinding.ProductLayoutBinding;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class SearchView
                 }
                 ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.producImage);
 
-                Glide.with(mMainActivity).load(p.mImageURL).into(imageView);
+                Glide.with(mMainActivity).load(p.mImageURL).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(imageView);
                 mBindingList.get(i).getRoot().setVisibility(View.VISIBLE);
             }
             else
@@ -84,7 +85,7 @@ public class SearchView
                 }
                 ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.producImage);
 
-                Glide.with(mMainActivity).load(p.mImageURL).into(imageView);
+                Glide.with(mMainActivity).load(p.mImageURL).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(imageView);
                 mBindingList.add(binding);
                 Log.i("Cuong", "url for Image: " + p.mImageURL);
             }
