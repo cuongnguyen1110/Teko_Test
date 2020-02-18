@@ -25,4 +25,9 @@ public class SearchView
         binding1.setProduct(p);
         binding1.setClickedHandler(mProductCtrl);
     }
+
+    public void ClearView()
+    {
+        mRoot.removeAllViews();
+    }
 }

@@ -2,8 +2,12 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -19,6 +23,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +42,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout main = (LinearLayout)findViewById(R.id.MainLayout);
+        main = main.findViewById(R.id.Scroll).findViewById(R.id.ProductList);
 
         LayoutInflater inflater = LayoutInflater.from(this.getApplicationContext());
+
+        final EditText editText = (EditText) findViewById(R.id.SearchEditText);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE)
+                {
+                    String text = editText.getText().toString();
+                    SearchForProduct(text);
+                    //handled = true;
+                }
+                return handled;
+            }
+        });
 
         mSearchView = new SearchView(main,inflater);
 
@@ -68,12 +90,23 @@ public class MainActivity extends AppCompatActivity {
 
         // Start the queue
         mRequestQueue.start();
-        SearchForProduct("intel");
+
     }
 
     public void SearchForProduct(String product)
     {
-        String url = mSearchURL.replace("_PRODUCT",product);
+        mSearchView.ClearView();
+        String pEncode = product;
+        try
+        {
+            pEncode = URLEncoder.encode(product,"US-ASCII");
+        } catch (Exception e){}
+
+
+        String url = mSearchURL.replace("_PRODUCT",pEncode);
+
+
+        Log.i("Cuong","sear url : "+url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 

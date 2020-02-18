@@ -20,6 +20,7 @@
             android:background="@android:color/holo_red_light">
 
             <EditText
+                android:id="@+id/SearchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="left"
@@ -28,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:hint="enter product code"
                 android:inputType="text"
-
+                android:imeOptions="actionDone"
                 android:paddingLeft="60dp">
 
             </EditText>
@@ -40,9 +41,20 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="15dp"
                 app:srcCompat="@drawable/search_icon" />
+
         </FrameLayout>
 
+        <ScrollView
+            android:id="@+id/Scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/ProductList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
 
 
     </LinearLayout>
