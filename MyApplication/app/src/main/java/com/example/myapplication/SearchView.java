@@ -34,6 +34,11 @@ public class SearchView
         mBindingList = new ArrayList<ProductLayoutBinding>();
     }
 
+    public void SetRootView(LinearLayout root)
+    {
+        mRoot = root;
+    }
+
     public void UpdateProductList(List<Product> pList)
     {
         int listSize = pList.size();
@@ -102,6 +107,7 @@ public class SearchView
 
     public void ClearView()
     {
-        mRoot.removeAllViews();
+        //mRoot.removeAllViews();
+        mBindingList.clear();
     }
 }

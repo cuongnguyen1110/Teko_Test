@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.example.myapplication.databinding.ProductDetailLayoutBinding;
 
 import org.json.JSONArray;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private SearchView mSearchView;
     private RequestQueue mRequestQueue;
     private String mSearchURL = "https://listing.stage.tekoapis.net/api/search/?channel=pv_online&q=_PRODUCT&visitorId=&_page=1&_limit=10&terminal=CP01";
+    private String mDitailProdURL = "https://listing.stage.tekoapis.net/api/products/PROD_SKU?channel=pv_online&terminal=CP01";
     //private List<Product> mProductList;
     ArrayList<Product> mProductList;
 
@@ -94,6 +98,41 @@ public class MainActivity extends AppCompatActivity {
 
         // Start the queue
         mRequestQueue.start();
+
+    }
+    public void GetProductDetail(Product p)
+    {
+        String url = mDitailProdURL.replace("PROD_SKU",p.mSKU);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        parseProdDetailRespone(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(jsonObjectRequest);
+    }
+
+    private void parseProdDetailRespone(JSONObject obj)
+    {
+        try
+        {
+            JSONObject product = obj.getJSONObject("result").getJSONObject("product");
+            Product p = new Product();
+            p.ConstructDetail(product);
+            ShowDetailProduct(p);
+        }
+        catch (Exception e){}
 
     }
 
@@ -162,6 +201,38 @@ public class MainActivity extends AppCompatActivity {
     {
         ProductDetailLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.product_detail_layout);
         binding.setProduct(p);
+
+        ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.producImage);
+
+        Glide.with(this).load(p.mImageURL).into(imageView);
+    }
+
+    public void BackPress(View v)
+    {
+        Log.i("Cuong","Press back button");
+        setContentView(R.layout.activity_main);
+
+        final EditText editText = (EditText) findViewById(R.id.SearchEditText);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE)
+                {
+                    String text = editText.getText().toString();
+                    SearchForProduct(text);
+                    //handled = true;
+                }
+                return handled;
+            }
+        });
+        
+        LinearLayout main = (LinearLayout)findViewById(R.id.MainLayout);
+
+        main = main.findViewById(R.id.Scroll).findViewById(R.id.ProductList);
+        mSearchView.SetRootView(main);
+        mSearchView.ClearView();
+        mSearchView.UpdateProductList(mProductList);
     }
 
 }
